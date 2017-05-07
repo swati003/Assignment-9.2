@@ -1,0 +1,29 @@
+Added 2 screenshots of output.
+==============================
+9.2
+Name , col.understaken,dob,stream,grade,state,city
+
+9.2
+
+student = LOAD '/pigInput5' using PigStorage(',') AS
+(Name:chararray,undertaken:chararray,DOB:chararray,stream:chararray,grade:int,state:chararray,city:chararray);
+
+(1)
+student_filter =  filter student by grade < 5;
+group_student = GROUP student_filter student_filter; 
+result = foreach student_filter generate group,COUNT(temp_result.Name);
+
+(2)
+student_filter_name  =  filter student by Name == 'alaska';
+
+result = FOREACH student_filter_name generate Name,city;
+
+(3)
+student_filter_name  =  filter student by (state == 'alabama' AND undertaken == 'goverenment');
+groupd = GROUP student_filter_name all;
+result = FOREACH groupd generate COUNT(student_filter_name.Name);
+
+(4)
+student_filter_name  =  filter student by (stream == 'BE' AND state == 'oregon');
+result = foreach student_filter_name generate name;
+
